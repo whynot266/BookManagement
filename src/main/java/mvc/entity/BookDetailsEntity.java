@@ -3,6 +3,7 @@ package mvc.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +21,7 @@ public class BookDetailsEntity {
     private double price;
 
     @Column(name = "numberOfPage")
+    @Max(value = 1000, message = "1000 is maximum")
     private int numberOfPage;
 
     @Column(name = "publishDate")

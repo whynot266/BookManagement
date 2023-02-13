@@ -2,7 +2,9 @@ package mvc.entity;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "book")
@@ -24,6 +26,7 @@ public class BookEntity {
 
     @OneToOne(cascade = {CascadeType.ALL})
     @PrimaryKeyJoinColumn
+    @Valid
     private BookDetailsEntity bookDetails;
 
     public BookEntity(){

@@ -13,60 +13,81 @@
 
 </head>
 <body>
+<div class="body-wrapper">
     <jsp:include page="header.jsp" />
-    <mvc:form action="process-update" id="add-form" method="post" modelAttribute="book">
-        <div class="wrapper-update-form wrapper-form add-form">
-            <div class='head-form d-flex'>
-                <div class='title d-flex'>
-                    <div style='flex-shrink: 0; margin-right: 10px;'>Update Book</div>
-                    <label for="id">Id:</label>
-                    <mvc:input class='id-input' path='id' type='text' role='spinbutton' value='${updatedBook.getId()}'
-                               style='background-color: #fff; display:none; border: none; width: 20px;'/>
+    <mvc:form action="process-update" id="update-form" method="post" modelAttribute="book">
+        <div class="wrapper-update-form wrapper-form update-form">
+            <div class='head-form d-flex' style="display:flex;justify-content:center;">
+                <div class='title'>
+                    <h2 style='text-align:center;'>Update Book</h2>
 
+                    <mvc:input path='id'
+                               style='display:none;'/>
+                    <mvc:input class='id-detail' path='bookDetails.id' role='spinbutton' type='text' value=''
+                                               style='display:none'/>
                 </div>
             </div>
             <div class='main-form'>
-                <label for="name">Name:</label>
-                <mvc:input class='name' type='text' placeholder='Book Name' value='${updatedBook.getName()}' path='name'/>
-                <form:errors path="name"/>
-                <div class='padding-bottom'></div>
-
-                <label for="author">Author:</label>
-                <mvc:input class='author' type='text' placeholder='Book Author' value='${updatedBook.getAuthor()}' path='author'/>
-                <form:errors path="author"/>
-                <div class='padding-bottom'></div>
-
-                <label for="isbn">Isbn:</label>
-                <mvc:input class='isbn' type='text' placeholder='Book Isbn' value='${updatedBook.getBookDetails().getIsbn()}' path='bookDetails.isbn'/>
-
-                <div class='padding-bottom'></div>
-
-                <label for="price">Price:</label>
-                <mvc:input class='price' type='text' placeholder='Book Price' value='${updatedBook.getBookDetails().getPrice()}' path='bookDetails.price'/>
 
 
-                <div class='padding-bottom'></div>
+                  <div class="form-group row ">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                      <mvc:input class='name form-control' type='text' placeholder='Book Name' path='name'/>
+                      <mvc:errors path="name"/>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="colFormLabel" class="col-sm-2 col-form-label">Author</label>
+                      <div class="col-sm-10">
+                         <mvc:input class='author form-control' type='text' placeholder='Book Author' path='author'/>
+                         <mvc:errors path="author"/>
+                      </div>
+                  </div>
+                   <div class="form-group row">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">ISBN</label>
+                        <div class="col-sm-10">
+                             <mvc:input class='isbn form-control' type='text' placeholder='Book Isbn' path='bookDetails.isbn'/>
+                        </div>
+                    </div>
+                   <div class="form-group row">
+                         <label for="colFormLabel" class="col-sm-2 col-form-label">Price</label>
+                         <div class="col-sm-10">
+                            <mvc:input class='price form-control' type='text' placeholder='Book Price' path='bookDetails.price'/>
+                         </div>
+                     </div>
+                   <div class="form-group row">
+                          <label for="colFormLabel" class="col-sm-2 col-form-label" >Publish Date</label>
+                          <div class="col-sm-10">
+                             <mvc:input class='publish-date form-control' type='date'
+                                                        path='bookDetails.publishDate'/>
+                          </div>
+                      </div>
+                   <div class="form-group row">
+                         <label for="colFormLabel" class="col-sm-2 col-form-label" >Number Of Pages</label>
+                         <div class="col-sm-10">
+                            <mvc:input class='number-of-pages form-control' type='number' placeholder='Number Of Page'
+                                                       path='bookDetails.numberOfPage'/>
+                            <mvc:errors path="bookDetails.numberOfPage"/>
+                         </div>
+                     </div>
+                   <div class="form-group row">
+                         <label for="colFormLabel" class="col-sm-2 col-form-label" >Category</label>
+                         <div class="col-sm-10">
+                            <mvc:select path="category.id" class="category form-control" >
+                                 <mvc:option value="0" label="----select----"/>
+                                 <mvc:options items="${categoryList}"/>
+                             </mvc:select>
+                             <mvc:errors path="category.id"/>
+                         </div>
+                     </div>
 
-                 <label for="publish-date">Publish Date:</label>
-                <mvc:input class='publish-date' type='date' placeholder='Publish Date' value='${updatedBook.getBookDetails().getPublishDate()}'
-                           path='bookDetails.publishDate'/>
-                <div class='padding-bottom'></div>
-                <label for="number-of-pages">Number of pages:</label>
-                <mvc:input class='number-of-pages' type='number' placeholder='Number Of Page' value='${updatedBook.getBookDetails().getNumberOfPage()}'
-                           path='bookDetails.numberOfPage'/>
 
-                <div class='padding-bottom'></div>
-                <label for="category">Category:</label>
-                <mvc:select path="category.id" class="category">
-                    <mvc:option value="0" label="${updatedBook.getCategory().getName()}"/>
-                    <mvc:options items="${categoryList}"/>
-                </mvc:select>
-                <mvc:errors path="category.id" cssClass="error"/>
-                <div class='padding-bottom'></div>
-                <button class='update-btn'> Update</button>
             </div>
+                <div style="display:flex;justify-content: center;"><div><button class="green-text-button" type="submit">Update Book</button></div></div>
+
         </div>
     </mvc:form>
-
+</div>
 </body>
 </html>

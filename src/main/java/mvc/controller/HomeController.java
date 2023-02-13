@@ -25,50 +25,53 @@ public class HomeController {
     BookRepository bookRepository;
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    HomeService homeService;
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String listBooks(Model model){
-        List<BookEntity> bookEntityList= (List<BookEntity>) bookRepository.findAll();
+        List<BookEntity> bookEntityList=  homeService.findAll();
         model.addAttribute("list", bookEntityList);
         return "home";
     }
     @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable int id){
-        bookRepository.deleteById(id);
+        homeService.deleteBookById(id);
         return "redirect:/";
     }
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
     public String updateBook(@PathVariable int id,
-
                              Model model){
-        model.addAttribute("book", new BookEntity());
         setCategoryDropDownList(model);
-        BookEntity bookEntity= bookRepository.findById(id).get();
-        model.addAttribute("updatedBook",bookEntity);
+        if (model.containsAttribute("book"))
 
+            return "update";
+
+        BookEntity bookEntity= homeService.findById(id);
+        model.addAttribute("book",bookEntity);
         return "update";
     }
-    @RequestMapping(value="/process-update", method = RequestMethod.POST)
-    public String updateBook(@ModelAttribute("book") BookEntity book,
-                             BindingResult bookResult){
+    @RequestMapping(value="update/process-update", method = RequestMethod.POST)
+    public String updateBook(@Valid @ModelAttribute("book") BookEntity book,
+                             BindingResult bookResult,
+                             RedirectAttributes redirectAttributes){
         if (bookResult.hasErrors()){
-            System.out.println("error");
-            return "redirect:/process-update";
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.book", bookResult);
+            redirectAttributes.addFlashAttribute("book", book);
+            return "redirect:/update/"+book.getId();
         }
-        BookEntity bookEntity= bookRepository.findById(book.getId()).get();
-        bookEntity.setName(book.getName());
-        bookEntity.setAuthor(book.getAuthor());
-        bookEntity.setBookDetails(book.getBookDetails());
-        bookEntity.setCategory(book.getCategory());
-        bookRepository.save(bookEntity);
+        System.out.println(book.toString());
+        homeService.updateBook(book);
+
         return "redirect:/";
     }
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam(name = "searchInput") String searchInput, Model model){
         List<BookEntity> resultList;
         if(searchInput.isEmpty()){
-            resultList= (List<BookEntity>) bookRepository.findAll();
+            resultList= (List<BookEntity>) homeService.findAll();
         }else{
-            resultList= bookRepository.findByNameOrAuthor(searchInput, searchInput);
+            resultList= homeService.findByNameOrAuthor(searchInput, searchInput);
         }
         model.addAttribute("list", resultList);
         return "home";
@@ -76,25 +79,27 @@ public class HomeController {
 
     @GetMapping(path = "/add")
     public String showAddForm(Model model){
-        if (!model.containsAttribute("book"))
-            model.addAttribute("book", new BookEntity());
+
+        model.addAttribute("book", new BookEntity());
         setCategoryDropDownList(model);
         return "add";
     }
     @RequestMapping(value = "/process-add", method = RequestMethod.POST)
     public String addBook(@Valid @ModelAttribute("book") BookEntity book,
-                          BindingResult bookResult
-                          ){
+                          BindingResult bookResult,
+                          RedirectAttributes redirectAttributes,
+                          Model model){
         System.out.println(book.toString());
         if (bookResult.hasErrors()){
-            System.out.println("error");
-            return "redirect:/add";
+            setCategoryDropDownList(model);
+
+            return "add";
         }
-        bookRepository.save(book);
+        homeService.addBook(book, book.getBookDetails());
         return "redirect:/";
     }
     private void setCategoryDropDownList(Model model) {
-        List<CategoryEntity> categoryEntityList = HomeService.findAllCategory();
+        List<CategoryEntity> categoryEntityList = homeService.findAllCategory();
         if (!categoryEntityList.isEmpty()) {
             Map<Integer, String> cateMap = new LinkedHashMap<>();
             for (CategoryEntity category : categoryEntityList)

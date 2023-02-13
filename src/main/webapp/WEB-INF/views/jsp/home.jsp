@@ -12,48 +12,51 @@
 
 </head>
 <body>
-    <jsp:include page="header.jsp" />
+    <div class="body-wrapper">
+        <jsp:include page="header.jsp" />
 
-    <h2>LIST OF BOOKS</h2>
-    <table class="table caption-top">
+            <h2 style="text-align:center">LIST OF BOOKS</h2>
+            <table class="table caption-top">
 
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-         <th scope="col">Author</th>
-         <th scope="col">ISBN</th>
-         <th scope="col">Price</th>
-         <th scope="col">Publish Date</th>
-         <th scope="col">Category</th>
-         <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach items="${list}" var="book">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                 <th scope="col">Author</th>
+                 <th scope="col">ISBN</th>
+                 <th scope="col">Price</th>
+                 <th scope="col">Publish Date</th>
+                 <th scope="col">Category</th>
+                 <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <c:forEach items="${list}" var="book">
 
-            <tr>
-              <th scope="row">${book.id}</th>
-              <td>${book.name}</td>
-              <td>${book.author}</td>
-              <td>${book.bookDetails.isbn}</td>
-              <td>${book.bookDetails.price}</td>
-              <td>${book.bookDetails.publishDate}</td>
-              <td>${book.category.name}</td>
-              <td>
-                <div style="display:flex;">
-                    <div class="green-text-button" style="margin-right:30px; padding: 1px 5px 1px 5px;"><a style="text-decoration:none;color:green;" href="./update/${book.getId()}">Update</a></div>
-                    <div class="green-text-button" style="margin-right:30px; padding: 1px 5px 1px 5px;"><a style="text-decoration:none;color:green;" href="./delete/${book.getId()}">Delete</a></div>
-                </div>
-              </td>
-            </tr>
-        </c:forEach>
+                    <tr>
+                      <th scope="row">${book.id}</th>
+                      <td>${book.name}</td>
+                      <td>${book.author}</td>
+                      <td>${book.bookDetails.isbn}</td>
+                      <td>${book.bookDetails.price}</td>
+                      <td>${book.bookDetails.publishDate}</td>
+                      <td>${book.category.name}</td>
+                      <td>
+                        <div style="display:flex;">
+                            <div class="green-text-button" style="margin-right:10px; padding: 1px 5px 1px 5px;"><a style="text-decoration:none;color:green;" href="./update/${book.getId()}">Update</a></div>
+                            <div class="green-text-button" style="margin-right:30px; padding: 1px 5px 1px 5px;"><a style="text-decoration:none;color:green;" href="./delete/${book.getId()}">Delete</a></div>
+                        </div>
+                      </td>
+                    </tr>
+                </c:forEach>
 
-      </tbody>
-    </table>
+              </tbody>
+            </table>
 
 
 
-    <script src="<c:url value="resources/js/script.js"/>"></script>
+            <script src="<c:url value="resources/js/script.js"/>"></script>
+    </div>
+
 </body>
 </html>

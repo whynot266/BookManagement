@@ -7,6 +7,14 @@ body{
     height: auto;
     font-family: 'Times New Roman', Times, serif;
 }
+.body-wrapper{
+    width:700px;
+    padding: 10px;
+    margin: 0 auto;
+    border:1px solid black;
+    box-shadow: 1px 2px 3px;
+}
+
 .green-text-button {
   font-size: 18px;
 
@@ -15,7 +23,7 @@ body{
   border: 2px solid green;
   border-radius: 5px;
   text-align: center;
-  transition: all 0.5s ease;
+  transition: all 0.1s ease;
   cursor: pointer;
 }
 
@@ -23,3 +31,9 @@ body{
   background-color: lightgreen;
   color: white;
 }
+.main-form{
+
+    padding:20px;
+    margin:0 auto;
+}
+

@@ -1,6 +1,7 @@
 package mvc.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Entity
@@ -8,6 +9,7 @@ import java.util.List;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Min(value=1, message = "This field must be selected")
     private int id;
     @Column(name = "name")
     private String name;

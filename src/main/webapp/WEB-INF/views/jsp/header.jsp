@@ -12,12 +12,12 @@
 <body>
     <div style="display:flex;background-color:light;">
          <div>
-            <form:form action="search" method="get">
+            <form:form action="/search" method="get">
                         <input style="width:500px"name="searchInput" type="text" />
                         <span><button class="green-text-button" type="submit">Search</button></span>
                     </form:form>
          </div>
-         <div style="margin-left:5px"><a href="./add"><button class="green-text-button" >New Book</button></a></div>
+         <div style="margin-left:5px"><a href="/add"><button class="green-text-button" >New Book</button></a></div>
     </div>
 
 
